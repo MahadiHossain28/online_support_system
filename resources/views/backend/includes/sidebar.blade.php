@@ -16,7 +16,7 @@
 
         [
             'title' => 'Admin Report',
-            'icon' => 'fa fa-bar-chart-o',
+            'icon' => 'fa-solid fa-chart-column',
             'permission' => '',
 
             'children' => [
@@ -543,22 +543,22 @@
             {{-- Section Label --}}
             @if(($menu['type'] ?? null) === 'label')
 
-                {{-- @if(canViewMenu($menu['permission'] ?? null)) --}}
+                @can($menu['permission'] ?? null)
 
                     <div class="sidebar-heading">
                         {{ $menu['label'] }}
                     </div>
 
-                {{-- @endif --}}
+                @endcan
 
-                {{-- @continue --}}
+                @continue
             @endif
 
 
             {{-- Permission --}}
-            {{-- @if(!canViewMenu($menu['permission'] ?? null))
+            @can($menu['permission'] ?? null)
                 @continue
-            @endif --}}
+            @endcan
 
 
             {{-- Menu With Children --}}
@@ -681,7 +681,7 @@
 
                 <div class="sidebar-item">
 
-                    <a href="{{ route($menu['route']) }}"
+                    <a href="{{ $menu['route'] ? route($menu['route']) : '' }}"
                        class="sidebar-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
 
                         <span class="sidebar-link-left">
